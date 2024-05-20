@@ -43,6 +43,36 @@
 \subsection{Faisons parler les données}
 \insertsubsectionframe
 
+\begin{frame}{Quelques chiffres en vrac}
+    Tout d'abord, remarquons que chaque station peut être identifiée à son \texttt{num\_site} (seul deux stations n'en n'ont pas).
+    Ensuite, voici ce que l'on a découvert :
+    \begin{block}{Des chiffres sympathiques}
+        \begin{itemize}
+            \item \texttt{site\_zb} : $10\,596$ (Site issu du programme \og zones blanches – centres-bourgs\fg{}) ;
+            \item \texttt{site\_dcc} : $10\,627$ (Site issu du \og Dispositif de Couverture Ciblée\fg{}) ;
+            \item \texttt{site\_strategique} : $144$ (Site issu du programme \og France Mobile\fg{}) ;
+            \item \texttt{mes\_4g\_trim} : $1\,618$ (Equipement du site en technologie 4g au cours du dernier trimestre (du 30/06/2022 au 30/09/2022)) ;
+            \item \texttt{site\_capa\_204mbps} : $92\,664$ (Site dont la capacité maximum théorique est supérieure ou égale à $\unit[240]{Mbs}$).
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Quelques chiffres en vrac : précision sur les indicateurs}
+    Ensuite, voici ce que l'on a découvert :
+    \begin{block}{\texttt{site\_zb}}
+        Le premier programme, initié en 2003 et nommé \og zones blanches – centres-bourgs\fg{} consistait à apporter des services de téléphonie mobile, SMS et internet mobile à très haut débit, dans plus de 3500 centres-bourgs de communes de France qui ne bénéficiaient d’aucune couverture mobile.
+        \footnotemark[1]
+    \end{block}
+
+    \begin{block}{\texttt{site\_dcc}}
+        Le dispositif de couverture ciblée vise à assurer une couverture mobile de qualité dans des zones non ou mal couvertes, en construisant jusqu’à 5 000 nouveaux sites par opérateur, dont une partie sera mutualisée.
+        \footnotemark[2]
+    \end{block}
+    
+    \footnotetext[1]{\url{https://www.tactis.fr/zone-blanche-zone-grise/}}
+    \footnotetext[2]{\url{https://agence-cohesion-territoires.gouv.fr/france-mobile-54}}
+\end{frame}
+
 
 
 \begin{frame}{Comparaison des différents équipements en terme de technologies (1/7)}
@@ -51,7 +81,6 @@
         \includegraphics[height=0.4\paperheight]{images/barplots/avec_techno.png}
         \caption{\label{fig:av_tech}Nombres de sites équipés d'au moins une technologie}
     \end{figure}
-        
 \end{frame}
 
 \begin{frame}{Comparaison des différents équipements en terme de technologies (2/7)}
@@ -80,7 +109,6 @@
         \end{tabular}
         \caption{Résumé des données de présence de technologie}
     \end{table}
-    
 \end{frame}
 
 \begin{frame}{Comparaison des différents équipements en terme de technologies (3/7)}
@@ -89,7 +117,6 @@
         \includegraphics[height=0.4\paperheight]{images/barplots/xG.png}
         \caption{\label{fig:xG}Nombres de sites équipés d'une unique technologie}
     \end{figure}
-    
 \end{frame}
 
 \begin{frame}{Comparaison des différents équipements en terme de technologies (4/7)}
