@@ -1,2 +1,9 @@
+CMD=pdflatex
+OUT_DIR=out
+INP_DIR=.
+
+all:
+	$(CMD) -output-directory $(OUT_DIR) $(INP_DIR)/main.tex
+
 clean:
-	rm -i -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.brf *.blg *.bbl main.pdf *.snm *.nav
+	rm -f ./$(OUT_DIR)/*
