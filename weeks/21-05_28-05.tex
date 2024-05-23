@@ -9,3 +9,104 @@
 \begin{frame}{\dots}
        
 \end{frame}
+
+
+\subsection{Automatic city detection}
+\insertsubsectionframe
+
+\begin{frame}{DBScan}
+    \begin{block}{Principe}
+        \begin{itemize}
+            \item Méthode de référence de la classification à densité (détection de clusters en se basant sur la concentration de points);
+            \item Se base sur deux paramètres : $\epsilon$ et $n_{min}$ qui caractérisent respectivement la distance maximale pour que deux points soient considérés "proches" et la quantité minimale de points proches pour qu'un cluster soit créé.
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Inconvénients}
+        \begin{itemize}
+            \item Le choix du paramètre $\epsilon$ est hasardeux;
+            \item Ne se comporte pas bien avec des jeux de données avec des clusters de densité variable (certains clusters avec des points plus rapprochés que d'autres);
+            \item Réagit mal au bruit;
+            \item Est binaire : un point appartient ou n'appartient pas à un cluster, pas d'entre deux.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Changement de métrique}
+    Une façon d'améliorer le problème de mauvaise prise en compte du bruit est de changer de métrique :
+    \begin{block}{core distance}
+        La core distance d'un point du jeu de donnée est la distance entre ce point et son kième plus proche point. (k à fixer)
+    \end{block}
+
+    \begin{block}{nouvelle métrique}
+        la distance entre deux points $x$ et $y$ d'un jeu de donnée peut être définie comme la plus grande valeur entre les core distances de x et y et la distance eucliedienne entre x et y.
+    \end{block}
+
+    \begin{figure}
+        \includegraphics[width=0.5\paperheight]{images/metrique.png}
+        \caption{\label{fig:metrique}Nouvelle métrique}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{HDBScan (1/2)}
+    \begin{block}{Principe général}
+        Consiste à fusionner les méthodes de classification hierarchique adscendante et DBScan pour permettre de s'affranchir du paramètre $\epsilon$.
+    \end{block}
+
+    \begin{block}{Étapes}
+        \begin{itemize}
+            \item Représenter les données par un graphe complet où chaque point est un sommet, puis valuer les arêtes par la métrique expliquée précédemment;
+            \item Trouver un arbre couvrant de poids minimum dans ce graphe;
+            \item Regarder quelles sont les composantes connexes du graphe en ne gardant que les arêtes dont le poids est inférieur à un certain seuil $\epsilon$ que l'on augmente progressivement;
+            \item On obtient alors un dendrogramme (on obient une partition pour chaque $\epsilon$ fixé);
+            \item On observe la persistance des classes de ce dendrogramme en fonction de la variation de $\epsilon$;
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+
+\begin{frame}{HDBScan (2/2)}
+    \begin{block}{Avantages}
+        \begin{itemize}
+            \item Permet de prendre en compte les probèmes de classe à densité variable;
+            \item en étudiant à quelle moment chaque point se retrouve exclu de sa classe au sein du dendrogramme, on obtient pour chaque point une probabilité d'appartenance à sa classe.
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Application à notre cas d'utilisation}
+        \begin{itemize}
+            \item Appliqué de la même manière que DBScan : si un point est dans un cluster, alors on considère qu'il est en ville, sinon en campagne;
+            \item La probabilité discutée précédemment permet de rajouter une incertitude sur l'appartenance (ou non) d'une station de base à une ville.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{sklearn.cluster.HDBSCAN}
+    \begin{itemize}
+        \item min\_cluster\_size=5 : groupings smaller than this size will be left as noise.
+        \item min\_samples=None : The number of samples in a neighborhood for a point to be considered as a core point.
+        \item cluster\_selection\_epsilon=0.0 : Clusters below this value will be merged.
+        \item max\_cluster\_size=None
+        \item metric='euclidean'
+        \item metric\_params=None
+        \item alpha=1.0 : A distance scaling parameter
+        \item algorithm='auto' : Exactly which algorithm to use for computing core distances
+        \item leaf\_size=40 : Leaf size for trees responsible for fast nearest neighbour queries when a KDTree or a BallTree are used as core-distance algorithms.
+        \item n\_jobs=None : Number of jobs to run in parallel to calculate distances.
+        \item cluster\_selection\_method='eom' : The method used to select clusters from the condensed tree.
+        \item allow\_single\_cluster=False : allow the result to be a single cluster
+        \item store\_centers=None
+        \item copy=False
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Résultats}
+    \begin{figure}
+        \includegraphics[width=0.9\paperheight]{images/villes_HDBSCAN.png}
+        \caption{\label{fig:HDBSCAN}Application d'HDBScan min\_cluster\_size=5, min\_samples=40}
+    \end{figure}
+\end{frame}
+
+
+
