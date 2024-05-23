@@ -27,6 +27,13 @@
     \end{figure}
 \end{frame}
 
+\begin{frame}{Fréquences d'émission des stations 5G}
+    \begin{figure}
+        \includegraphics[height=0.3\paperheight]{images/barplots/5G_freq.png}
+        \caption{\label{fig:5g_freq}Répartition des fréquences d'émission des stations 5G, en fonction des opérateurs}
+    \end{figure}
+\end{frame}
+
 
 \subsection{Détection automatique des villes}
 \insertsubsectionframe
@@ -51,11 +58,6 @@
 
 \begin{frame}{Changement de métrique}
     Une façon d'améliorer le problème de mauvaise prise en compte du bruit est de changer de métrique :
-    
-
-    
-
-
     \begin{columns}
         \begin{column}{0.55\textwidth}
             \begin{block}{\emph{Core distance}}
@@ -109,24 +111,22 @@
 \end{frame}
 
 \begin{frame}{Paramètres de sklearn.cluster.HDBSCAN}
-    % \begin{block}{}
-        \begin{itemize}
-            \item \texttt{min\_cluster\_size=5} : groupings smaller than this size will be left as noise;
-            \item \texttt{min\_samples=None} : The number of samples in a neighborhood for a point to be considered as a core point;
-            \item \texttt{cluster\_selection\_epsilon=0.0} : Clusters below this value will be merged;
-            \item \texttt{max\_cluster\_size=None};
-            \item \texttt{metric='euclidean'};
-            \item \texttt{metric\_params=None};
-            \item \texttt{alpha=1.0} : A distance scaling parameter;
-            \item \texttt{algorithm='auto'} : Exactly which algorithm to use for computing core distances;
-            \item \texttt{leaf\_size=40} : Leaf size for trees responsible for fast nearest neighbour queries when a KDTree or a BallTree are used as core-distance algorithms;
-            \item \texttt{n\_jobs=None} : Number of jobs to run in parallel to calculate distances;
-            \item \texttt{cluster\_selection\_method='eom'} : The method used to select clusters from the condensed tree;
-            \item \texttt{allow\_single\_cluster=False} : allow the result to be a single cluster;
-            \item \texttt{store\_centers=None};
-            \item \texttt{copy=False}.
-        \end{itemize}
-    % \end{block}
+    \begin{itemize}
+        \item \texttt{min\_cluster\_size=5} : groupings smaller than this size will be left as noise;
+        \item \texttt{min\_samples=None} : The number of samples in a neighborhood for a point to be considered as a core point;
+        \item \texttt{cluster\_selection\_epsilon=0.0} : Clusters below this value will be merged;
+        \item \texttt{max\_cluster\_size=None};
+        \item \texttt{metric='euclidean'};
+        \item \texttt{metric\_params=None};
+        \item \texttt{alpha=1.0} : A distance scaling parameter;
+        \item \texttt{algorithm='auto'} : Exactly which algorithm to use for computing core distances;
+        \item \texttt{leaf\_size=40} : Leaf size for trees responsible for fast nearest neighbour queries when a KDTree or a BallTree are used as core-distance algorithms;
+        \item \texttt{n\_jobs=None} : Number of jobs to run in parallel to calculate distances;
+        \item \texttt{cluster\_selection\_method='eom'} : The method used to select clusters from the condensed tree;
+        \item \texttt{allow\_single\_cluster=False} : allow the result to be a single cluster;
+        \item \texttt{store\_centers=None};
+        \item \texttt{copy=False}.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Résultats}
