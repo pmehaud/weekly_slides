@@ -6,16 +6,33 @@
 \subsection{Statistiques stations de bases - départements}
 \insertsubsectionframe
 
+\begin{frame}{Méthodologie}
+    On va utiliser une base de donnée complémentaire, reprise de celle trouvée l'année dernière.
+
+    \begin{block}{Une nouvelle base de donnée\footnotemark}
+        Cette base de donnée renseigne, par département, la \textbf{superficie} (en $\unit{km^2}$), la \textbf{population} et la \textbf{densité de population} au $\unit{km^2}$.
+    \end{block}
+    
+    A partir de cette base, on va donc pouvoir extraire le nombre d'habitants par stations (normalisé par la taille du département) et la densité de station par département.
+
+    \begin{block}{Calcul du nombre d'habitants par stations}
+        Soit $\lambda$ le nombre que l'on cherche. Tout d'abord, on se donne $\gamma$, le rapport entre le nombre d'habitant et la surface du département, qui est donné par la densité de population.
+        Ensuite, on calcule notre résultat comme suit :$$\lambda = \text{nombre de stations du département}\div\gamma$$
+    \end{block}
+
+    \footnotetext{\url{https://france.ousuisje.com/departements/classement/superficie.php}}
+\end{frame}
+
 \begin{frame}{Nombre d'habitants par stations}
     \begin{figure}
-        \includegraphics[height=0.55\paperheight]{images/barplots/nb_hab_par_station_par_dep.png}
+        \includegraphics[width=0.9\paperwidth]{images/barplots/nb_hab_par_station_par_dep.png}
         \caption{\label{fig:nb_hap_par_stat_par_dep}Répartition du nombre d'habitants par station, en fonction du département}
     \end{figure}
 \end{frame}
 
 \begin{frame}{Densité de stations (1/2)}
     \begin{figure}
-        \includegraphics[height=0.55\paperheight]{images/barplots/densite_station_par_dep_sansIDF.png}
+        \includegraphics[width=0.9\paperwidth]{images/barplots/densite_station_par_dep_sansIDF.png}
         \caption{\label{fig:densite_stat_ssIDF}Nombre de stations de base au $\unit{km^2}$, sans l'Île-de-France}
     \end{figure}
 \end{frame}
@@ -29,7 +46,7 @@
 
 \begin{frame}{Fréquences d'émission des stations 5G}
     \begin{figure}
-        \includegraphics[height=0.3\paperheight]{images/barplots/5G_freq.png}
+        \includegraphics[width=0.9\paperwidth]{images/barplots/5G_freq.png}
         \caption{\label{fig:5g_freq}Répartition des fréquences d'émission des stations 5G, en fonction des opérateurs}
     \end{figure}
 \end{frame}
@@ -65,7 +82,7 @@
             \end{block}
         
             \begin{block}{Nouvelle métrique}
-                La distance entre deux points $x$ et $y$ d'un jeu de donnée peut être définie comme la plus grande valeur entre les core distances de $x$ et $y$ et la distance eucliedienne entre $x$ et $y$.
+                La distance entre deux points $x$ et $y$ d'un jeu de donnée peut être définie comme la plus grande valeur entre les \emph{core distances} de $x$ et $y$ et la distance eucliedienne entre $x$ et $y$.
             \end{block}
         \end{column}
         \begin{column}{0.4\textwidth}
@@ -98,7 +115,7 @@
     \begin{block}{Avantages}
         \begin{itemize}
             \item Permet de prendre en compte les probèmes de classe à densité variable;
-            \item en étudiant à quelle moment chaque point se retrouve exclu de sa classe au sein du dendrogramme, on obtient pour chaque point une probabilité d'appartenance à sa classe.
+            \item En étudiant à quelle moment chaque point se retrouve exclu de sa classe au sein du dendrogramme, on obtient pour chaque point une probabilité d'appartenance à sa classe.
         \end{itemize}
     \end{block}
 
@@ -132,7 +149,7 @@
 \begin{frame}{Résultats}
     \begin{figure}
         \includegraphics[width=0.9\paperheight]{images/villes_HDBSCAN.png}
-        \caption{\label{fig:HDBSCAN}Application d'HDBScan min\_cluster\_size=5, min\_samples=40}
+        \caption{\label{fig:HDBSCAN}Application d'HDBScan \texttt{min\_cluster\_size=5}, \texttt{min\_samples=40}}
     \end{figure}
 \end{frame}
 
