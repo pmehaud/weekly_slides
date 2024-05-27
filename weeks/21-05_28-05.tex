@@ -9,7 +9,7 @@
 \begin{frame}{Méthodologie}
     On va utiliser une base de donnée complémentaire, reprise de celle trouvée l'année dernière.
 
-    \begin{block}{Une nouvelle base de donnée\footnotemark}
+    \begin{block}{Une nouvelle base de donnée\footnotemark[1]}
         Cette base de donnée renseigne, par département, la \textbf{superficie} (en $\unit{km^2}$), la \textbf{population} et la \textbf{densité de population} au $\unit{km^2}$.
     \end{block}
     
@@ -20,7 +20,7 @@
         Ensuite, on calcule notre résultat comme suit :$$\lambda = \gamma\times\frac{1}{\text{nombre de stations du département}}$$
     \end{block}
 
-    \footnotetext{\url{https://france.ousuisje.com/departements/classement/superficie.php}}
+    \footnotetext[1]{\url{https://france.ousuisje.com/departements/classement/superficie.php}}
 \end{frame}
 
 \begin{frame}{Nombre d'habitants par stations non normalisé}
@@ -247,7 +247,7 @@
 
 
 
-\begin{frame}{Fonctionnement HDBScan\footnotemark }
+\begin{frame}{Fonctionnement HDBScan\footnotemark[2] }
     \begin{block}{Principe général}
         HDBScan consiste à fusionner les méthodes de classification hierarchique adscendante et DBScan pour permettre de s'affranchir du paramètre $\varepsilon$.
     \end{block}
@@ -255,11 +255,11 @@
 
     \begin{figure}
         \includegraphics[width=0.5\paperheight]{images/Illustration-HDBSCAN-1.png}
-        \caption{\label{fig:ill_HDBScan_1}Le jeu de donnée exemple \footnotemark}
+        \caption{\label{fig:ill_HDBScan_1}Le jeu de donnée exemple \footnotemark[3]}
     \end{figure}
 
-    \footnotetext{\url{http://link.springer.com/chapter/10.1007\%2F978-3-642-37456-2\_14}}
-    \footnotetext{\url{{https://hdbscan.readthedocs.io/en/latest/how\_hdbscan_works.html}}}
+    \footnotetext[2]{\url{http://link.springer.com/chapter/10.1007\%2F978-3-642-37456-2\_14}}
+    \footnotetext[3]{\url{{https://hdbscan.readthedocs.io/en/latest/how\_hdbscan_works.html}}}
 \end{frame}
 
 \begin{frame}{Fonctionnement HDBScan }
@@ -377,7 +377,7 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{Paramètres de sklearn.cluster.HDBSCAN \footnotemark}
+\begin{frame}{Paramètres de sklearn.cluster.HDBSCAN \footnotemark[4]}
     \begin{itemize}
         \item \texttt{min\_cluster\_size=5} : groupings smaller than this size will be left as noise;
         \item \texttt{min\_samples=None} : The number of samples in a neighborhood for a point to be considered as a core point;
@@ -394,7 +394,7 @@
         \item \texttt{store\_centers=None};
         \item \texttt{copy=False}.
     \end{itemize}
-    \footnotetext{\url{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.HDBSCAN.html}}
+    \footnotetext[4]{\url{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.HDBSCAN.html}}
 \end{frame}
 
 \begin{frame}{Résultats}
