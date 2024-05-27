@@ -15,18 +15,33 @@
     
     A partir de cette base, on va donc pouvoir extraire le nombre d'habitants par stations (normalisé par la taille du département) et la densité de station par département.
 
-    \begin{block}{Calcul du nombre d'habitants par stations}
-        Soit $\lambda$ le nombre que l'on cherche. Tout d'abord, on se donne $\gamma$, le rapport entre le nombre d'habitant et la surface du département, qui est donné par la densité de population.
-        Ensuite, on calcule notre résultat comme suit :$$\lambda = \text{nombre de stations du département}\div\gamma$$
+    \begin{block}{Calcul du nombre d'habitants par stations normalisé}
+        Soit $\lambda$ le nombre d'habitants par stations, par $\unit{km^2}$. Tout d'abord, on se donne $\gamma$, le rapport entre le nombre d'habitant et la surface du département, qui est donné par la densité de population.
+        Ensuite, on calcule notre résultat comme suit :$$\lambda = \gamma\times\frac{1}{\text{nombre de stations du département}}$$
     \end{block}
 
     \footnotetext{\url{https://france.ousuisje.com/departements/classement/superficie.php}}
 \end{frame}
 
-\begin{frame}{Nombre d'habitants par stations}
+\begin{frame}{Nombre d'habitants par stations non normalisé}
+    C'est le même calcul que précédemment, sauf qu'à la place de $\gamma$, on utilise simplement la population du département.
     \begin{figure}
         \includegraphics[width=0.9\paperwidth]{images/barplots/nb_hab_par_station_par_dep.png}
         \caption{\label{fig:nb_hap_par_stat_par_dep}Répartition du nombre d'habitants par station, en fonction du département}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Nombre d'habitants par stations normalisé (1/2)}
+    \begin{figure}
+        \includegraphics[width=0.9\paperwidth]{images/barplots/nb_hab_par_stations_par_km2_sansIDF.png}
+        \caption{\label{fig:nb_hap_par_stat_par_dep_norm_ssIDF}Répartition du nombre d'habitants par station, en fonction du département (normalisé), sans l'Île-de-France}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Nombre d'habitants par stations normalisé (2/2)}
+    \begin{figure}
+        \includegraphics[height=0.55\paperheight]{images/barplots/nb_hab_par_stations_par_km2_IDF.png}
+        \caption{\label{fig:nb_hap_par_stat_par_dep_norm_IDF}Répartition du nombre d'habitants par station, en fonction du département (normalisé), sur l'Île-de-France}
     \end{figure}
 \end{frame}
 
@@ -51,6 +66,90 @@
     \end{figure}
 \end{frame}
 
+\subsection{Détection de voisins - méthode PAQUIRY}
+\insertsubsectionframe
+
+\begin{frame}{Principe général}
+    La recherche de voisins va s'articuler atour de deux axes :
+    \begin{block}{Triangulation de Delaunay}
+        On crée un graphe de voisinage grâce à la triangulation de Delaunay. Ceci nous donne donc, pour chaque station de base, une liste de voisins potentiels.
+        Il faut ensuite vérifier que ce sont bien des voisins réels.
+    \end{block}
+    \begin{block}{Critères de sélection}
+        Pour être sûr qu'un voisin est un voisin réel on applique trois critères, dans l'ordre suivant :
+        \begin{enumerate}
+            \item la distance maximale ;
+            \item le plus proche voisin dans un cadrant ;
+            \item l'angle minimum entre deux voisins.
+        \end{enumerate}
+    \end{block}
+    Cette méthode a été élaborée par Delphine PAQUIRY l'été dernier.
+\end{frame}
+
+\begin{frame}{Critère de distance}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{block}{Principe}
+                Ici, on élimine tous les voisins qui sont distants de plus de $\unit[15]{km}$.
+            \end{block}
+            \begin{block}{Intérêt du critère}
+                Il est logique de penser que deux stations trop éloignées géographiquement ne sont pas voisines.
+            \end{block}
+        \end{column}
+        \begin{column}{0.55\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.5\paperwidth]{images/criteria_illustrations/distance.png}}
+                \caption{\label{fig:distance_crit}Illustration du critère de distance}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Critère des cadrants}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{block}{Principe}
+                Ici, on ne garde que le plus proche voisin dans un cadrant. On a choisi 6 cadrants car c'est le chiffre qui nous donne les meilleurs résultats.
+            \end{block}
+            \begin{block}{Intérêt du critère}
+                On évite les effets de cluster.
+            \end{block}
+        \end{column}
+        \begin{column}{0.55\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.5\paperwidth]{images/criteria_illustrations/cadrants.png}}
+                \caption{\label{fig:cadrants_crit}Illustration du critère des cadrants}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Critère de l'angle}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{block}{Principe}
+                Ici, si deux voisins sont séparés d'un angle inférieur à $30^{\circ}$, on ne garde que le plus proche. Cette valeur d'angle est arbitraire et pourrait être variable en fonction de l'urbanité de la station.
+            \end{block}
+            \begin{block}{Intérêt du critère}
+                Si deux stations sont trop proches angulairement parlant, la plus proche fait écran par rapport à la plus éloignée.
+            \end{block}
+        \end{column}
+        \begin{column}{0.55\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.5\paperwidth]{images/criteria_illustrations/angle.png}}
+                \caption{\label{fig:angle_crit}Illustration du critère de l'angle}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Voisins réels}
+    Voici donc ce que l'on obtient à la fin, un graphe de voisinage :
+    \begin{figure}
+        \boxed{\includegraphics[height=0.55\paperheight]{images/criteria_illustrations/final.png}}
+        \caption{\label{fig:result_crit}Résultat final - voisins réels}
+    \end{figure}
+\end{frame}
 
 \subsection{Détection automatique des villes}
 \insertsubsectionframe
