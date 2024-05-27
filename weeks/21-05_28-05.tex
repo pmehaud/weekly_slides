@@ -73,6 +73,58 @@
     \end{block}
 \end{frame}
 
+\begin{frame}{Fonctionnement DBScan (1/2)}
+
+    \begin{columns}
+        \begin{column}{0.40\textwidth}
+            \begin{block}{Etape 0 : Initialisation}
+                Soient n points de $\mathbb{R}^p$, $\epsilon \in \mathbb{R}$ et $n_{min} \in \mathbb{N}$.
+
+                Ici, on prend $n_{min}=3$ et $\epsilon=2$
+            \end{block}
+
+            \begin{block}{Etape 1 - Les voisins}
+                Pour chaque point, on cherche tous les points à une distance inférieure à $\epsilon$ (dont lui même). On les appelera les voisins.
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.60\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.41\paperheight]{images/Illustration_DBScan_1.png}
+                \caption{\label{fig:ill_DBScan_1} DBScan : Détection des voisins}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \begin{table}[!ht]
+        \centering
+        \begin{tabular}{c|ccccc}
+            \textbf{Point} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{\dots} & \textbf{I} \\ \hline
+            \textbf{N(Points)} & $\left\{ A, B, C \right\}$ & $\left\{ A, B, D \right\}$ & $\left\{ A, C, D \right\}$ & & $\left\{ I \right\}$ \\ 
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Fonctionnement DBScan (2/2)}
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Etape 2 - Constuction du graphe de voisinage des noyaux}
+                \begin{itemize}
+                    \item Les points ayant au moins $n_{min}$ voisins sont considérés comme des noyaux. On construit alors un graphe dont les sommets sont les noyaux et il existe une arete entre deux noyaux si et seulement si ils sont voisins.
+                    \item Les composantes connexes de ce graphe sont les clusters. On rattache alors aux clusters les points voisins d'au moins un noyau de ce cluster, on les appelle points de bordure.
+                    \item Enfin, les sommets qui n'apparaissent pas dans le graphe sont considérés comme du bruit (pas de classe).
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.5\paperheight]{images/Illustration_DBScan_2.png}
+                \caption{\label{fig:ill_DBScan_2} DBScan : création des clusters}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \begin{frame}{Changement de métrique}
     Une façon d'améliorer le problème de mauvaise prise en compte du bruit est de changer de métrique :
     \begin{columns}
@@ -94,28 +146,127 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{HDBScan (1/2)}
+
+
+\begin{frame}{Fonctionnement HDBScan\footnotemark }
     \begin{block}{Principe général}
-        Consiste à fusionner les méthodes de classification hierarchique adscendante et DBScan pour permettre de s'affranchir du paramètre $\varepsilon$.
+        HDBScan consiste à fusionner les méthodes de classification hierarchique adscendante et DBScan pour permettre de s'affranchir du paramètre $\varepsilon$.
     \end{block}
 
-    \begin{block}{Étapes}
-        \begin{itemize}
-            \item Représenter les données par un graphe complet où chaque point est un sommet, puis valuer les arêtes par la métrique expliquée précédemment;
-            \item Trouver un arbre couvrant de poids minimum dans ce graphe;
-            \item Regarder quelles sont les composantes connexes du graphe en ne gardant que les arêtes dont le poids est inférieur à un certain seuil $\varepsilon$ que l'on augmente progressivement;
-            \item On obtient alors un dendrogramme (on obient une partition pour chaque $\varepsilon$ fixé);
-            \item On observe la persistance des classes de ce dendrogramme en fonction de la variation de $\varepsilon$.
-        \end{itemize}
-    \end{block}
 
+    \begin{figure}
+        \includegraphics[width=0.5\paperheight]{images/Illustration-HDBSCAN-1.png}
+        \caption{\label{fig:ill_HDBScan_1}Le jeu de donnée exemple \footnotemark}
+    \end{figure}
+
+    \footnotetext{\url{http://link.springer.com/chapter/10.1007\%2F978-3-642-37456-2\_14}}
+    \footnotetext{\url{{https://hdbscan.readthedocs.io/en/latest/how\_hdbscan_works.html}}}
 \end{frame}
 
-\begin{frame}{HDBScan (2/2)}
+\begin{frame}{Fonctionnement HDBScan }
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Etape 1 - Constuction de l'abre couvrant de poids minimum}
+                \begin{itemize}
+                    \item Représenter les données par un graphe complet où chaque point est un sommet
+                    \item Valuer les arêtes par la métrique expliquée précédemment;
+                    \item Trouver un arbre couvrant de poids minimum dans ce graphe;
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.4\paperheight]{images/Illustration-HDBScan-2.png}
+                \caption{\label{fig:ill_HDBScan_2} Arbre couvrant de poids minimum}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Fonctionnement HDBScan }
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Etape 2 - Création du dendrogramme}
+                \begin{itemize}
+                    \item Ne garder que les arêtes correspondant à un certain seuil que l'on fait varier.
+                    \item Observer l'évolution des classes (composantes connexes) en fonction de cette distance.
+                    \item Construire un dendrogramme à partir de ces informations.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.4\paperheight]{images/Illustration-HDBScan-3.png}
+                \caption{\label{fig:ill_HDBScan_3} Dendrogramme}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Fonctionnement HDBScan }
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Etape 3 - Condensation du dendrogramme}
+                    On va chercher à condenser le dendrogramme précédent. Pour cela, on considère qu'au départ il n'y a qu'un cluster.
+                    On considère qu'un cluster n'est plus considéré comme tel quand il possède moins d'individu qu'un certain seuil (appelons le $n_{min}$).
+                    A chaque séparation dans le dendrogramme, il y'a trois cas de figure :
+                    \begin{itemize}
+                        \item Si les deux parties comportent au moins $n_{min}$ individus, alors on considère que le cluster parent meurt et donne naissance à deux enfants.
+                        \item Si une seule des parties comporte au moins $n_{min}$ individus, alors on considère que ce cluster est la continuation du précédent.
+                        \item Si les deux parties comportent moins de $n_{min}$ individus, alors on considère que le cluster meurt.
+                    \end{itemize}
+
+            \end{block}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.4\paperheight]{images/Illustration-HDBScan-4.png}
+                \caption{\label{fig:ill_HDBScan_4} Dendrogramme condensé}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Fonctionnement HDBScan }
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Etape 4 - Selection des clusters}
+                    On va choisir les clusters que l'on veut grader au sein du dendrogramme condensé en choisissant les clusters les plus "durables".
+                    Graphiquement, cela revient à choisir les clusters dont l'aire est la plus importante dans le dendrogramme condensé.
+                    A la fin on souhaite une partition, donc qu'on ne peut selectionner à la fois un cluster et son descendant.
+            \end{block}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.4\paperheight]{images/Illustration-HDBScan-5.png}
+                \caption{\label{fig:ill_HDBScan_5} Clusters choisis}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Fonctionnement HDBScan }
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Etape 5 - Resultat}
+                    A la fin, on obtient les clusters ainsi qu'une probabilité pour chaque point qui caractèrise la probabilité que le point appartienne à son cluster. Cette probabilité est déterminée en observant à quel moment le point se déconnecte de son cluster dans le dengdrogramme.
+            \end{block}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.4\paperheight]{images/Illustration-HDBScan-6.png}
+                \caption{\label{fig:ill_HDBScan_6} Résulats sur le jeu de donnée d'exemple}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{HDBScan}
     \begin{block}{Avantages}
         \begin{itemize}
             \item Permet de prendre en compte les probèmes de classe à densité variable;
-            \item En étudiant à quelle moment chaque point se retrouve exclu de sa classe au sein du dendrogramme, on obtient pour chaque point une probabilité d'appartenance à sa classe.
+            \item Introduit un modèle probabiliste.
         \end{itemize}
     \end{block}
 
@@ -127,7 +278,7 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{Paramètres de sklearn.cluster.HDBSCAN}
+\begin{frame}{Paramètres de sklearn.cluster.HDBSCAN \footnotemark}
     \begin{itemize}
         \item \texttt{min\_cluster\_size=5} : groupings smaller than this size will be left as noise;
         \item \texttt{min\_samples=None} : The number of samples in a neighborhood for a point to be considered as a core point;
@@ -144,6 +295,7 @@
         \item \texttt{store\_centers=None};
         \item \texttt{copy=False}.
     \end{itemize}
+    \footnotetext{\url{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.HDBSCAN.html}}
 \end{frame}
 
 \begin{frame}{Résultats}
