@@ -1,0 +1,33 @@
+\smallframetitle
+
+\section{Semaine du 21/05/24 au 27/05/24}
+\insertsectionframe
+
+\subsection{Amélioration des critères de sélection}
+\insertsubsectionframe
+
+\begin{frame}{Prise en compte de la probabilité d'être dans une ville}
+    \begin{block}{Concept}
+        Chaque station possède une probabilité d'être dans une ville.
+        On va donc utiliser ce paramètre afin de moduler l'angle et la distance minimale entre 2 stations.
+    \end{block}
+
+    \begin{block}{Choix d'implantation}
+        Pour l'instant, on a séparé les stations en 4 catégories, en fonction de la probabilité d'être une ville:
+        \begin{itemize}
+            \item $p=1$ : \texttt{distance\_max = 1} et \texttt{min\_angle = 45};
+            \item $p=0$ : \texttt{distance\_max = 15} et \texttt{min\_angle = 15};
+            \item $p\in\left]1 ; 0,6\right[$ : \texttt{distance\_max = 5} et \texttt{min\_angle = 30};
+            \item $p\in\left[0,6 ; 0\right[$ : \texttt{distance\_max = 10} et \texttt{min\_angle = 20}.
+        \end{itemize}
+    \end{block}
+    
+    \begin{alertblock}{Pistes de travail}
+        Il va maintenant falloir effectuer des expérimentations pour trouver les bons paramètres et peut-être essayer de savoir quel paramètre est le plus pertinent.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Améliorations des cadrants}
+    Dans un premier temps, nous avons décidé de se laisser la possibilité de choisir plus d'un voisin par cadrant.
+    Cette option ne sera peut-être pas gardée car elle n'élimine pas assez de voisins potentiels.
+\end{frame}
