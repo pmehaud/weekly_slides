@@ -1,4 +1,71 @@
 \smallframetitle
 
-\section{Semaine du 21/05/24 au 27/05/24}
+\section{Semaine du 03/06/24 au 06/06/24}
 \insertsectionframe
+
+\subsection{Nouvelle manière de détecter les villes}
+\insertsubsectionframe
+
+\begin{frame}{Méthodologie}
+    Les résultats précédents en utilisant HDBScan ou même DBScan ne sont pas concluants car ils ne donnent pas de résultats absolus sur l'appartenance d'une station à une ville. Ainsi, nous avons mis en place une nouvelle stratégie.
+    \begin{block}{Changement de cap}
+        Au lieu d'utiliser une méthode de clustering, nous allons utiliser quelque chose de plus simple.
+        On classifie chaque station selon la distance moyenne aux $3$ plus proches voisins. %2 c'est pas assez pour avoir quelquechose de palapable, 4 augmente trop la distance.
+        Soit $d$ cette distance, on regroupe les stations de la manière suivante:
+        \begin{itemize}
+            \item $d\in\left]0, 1\right]$ : centre ville dense;
+            \item $d\in\left]1, 2\right]$ : couronne périhurbaine;
+            \item $d\in\left]2, 5\right]$ : campagne;
+            \item $d\in\left]5, 10\right]$ : campagne profonde;
+            \item $d\in\left]10, \infty\right[$ : trou paumé ou valeur aberrante.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Méthodologie : choix techniques}
+    \begin{block}{Calcul des plus proches voisins}
+        Nous utilisons la bibliothèque \emph{sklearn.neighbors.NearestNeighbors}\footnotemark.
+    \end{block}
+
+    \begin{block}{Choix du nombre de voisins}
+        Après plusieurs expérimentations, nous avons choisi de conserver $3$ voisins dans notre calcul.
+        En effet, un chiffre inférieur à $2$ serait aberrant car ce ne serait pas une vraie moyenne (ici on cherche plus une mesure de la densité de stations).
+        De plus, un chiffre supérieur à $4$ prendrait en compte des stations trop éloignées, ce qui serait aberrant.
+    \end{block}
+    
+    \begin{block}{Métrique}
+        Nous avons décidé de partir de la projection de Lambert 93 pour calculer cette distance.
+        L'avantage est le gain de temps (environ 30 fois plus rapide), sans perte de performance, par rapport à la conversion en $\unit{km}$ depuis les coordonnées Longitude, Latitude.
+    \end{block}
+
+    \footnotetext{\url{https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.NearestNeighbors.html}}
+\end{frame}
+
+\begin{frame}{Mise à jour des critères}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{block}{Angle}
+                Voici les différents paliers que nous appliquons :
+                \begin{itemize}
+                    \item $d\in\left]0, 1\right]$ : $\text{angle\_min}=40^\circ$;
+                    \item $d\in\left]1, 2\right]$ : $\text{angle\_min}=30^\circ$;
+                    \item $d\in\left]2, 5\right]$ : $\text{angle\_min}=25^\circ$;
+                    \item $d\in\left]5, 10\right]$ : $\text{angle\_min}=15^\circ$;
+                    \item $d\in\left]10, \infty\right[$ : $\text{angle\_min}=10^\circ$.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.4\paperwidth}
+            \begin{block}{Distance}
+                Voici les différents paliers que nous appliquons :
+                \begin{itemize}
+                    \item $d\in\left]0, 1\right]$ : $\text{distance\_max}=2$;
+                    \item $d\in\left]1, 2\right]$ : $\text{distance\_max}=5$;
+                    \item $d\in\left]2, 5\right]$ : $\text{distance\_max}=10$;
+                    \item $d\in\left]5, 10\right]$ : $\text{distance\_max}=15$;
+                    \item $d\in\left]10, \infty\right[$ : $\text{distance\_max}=15$.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
