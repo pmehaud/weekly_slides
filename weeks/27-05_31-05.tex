@@ -3,6 +3,26 @@
 \section{Semaine du 27/05/24 au 31/05/24}
 \insertsectionframe
 
+\subsection{Comparaison des méthodes de détection des villes}
+\insertsubsectionframe
+
+\begin{frame}{HDBScan vs DBScan}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.4\paperwidth]{images/France-Villes-Orange_0.03_15.png}
+                \caption{\label{fig:fr-vi-or-0.03-15}Les villes détectées en France avec DBScan pour l'opérateur Orange avec $\epsilon=0.03$ et $n_{min}=15$}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.4\paperwidth]{images/villes_HDBSCAN.png}
+                \caption{\label{fig:HDBSCAN}Les villes détectées en France avec HDBScan pour l'opérateur Orange avec \texttt{min\_cluster\_size=5}, \texttt{min\_samples=40}}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \subsection{Amélioration des critères de sélection}
 \insertsubsectionframe
 
@@ -28,6 +48,29 @@
 \end{frame}
 
 \begin{frame}{Améliorations des cadrants}
-    Dans un premier temps, nous avons décidé de se laisser la possibilité de choisir plus d'un voisin par cadrant.
-    Cette option ne sera peut-être pas gardée car elle n'élimine pas assez de voisins potentiels.
+    \begin{block}{KNN}
+        Dans un premier temps, nous avons décidé de pouvoir chosir le nombre de voisins par cadran que nous souhaitons conserver.
+        Cette amélioration ne semble pas très concluante car la méthode devient trop permissive pour $k \geq 2$ (4190 / 4337 voisins conservés).
+    \end{block}
+    \begin{block}{Optimisation du positionnement des cadrans}
+        La position de cadran est choisie en testant un angle $\alpha$ qui est décalage angulaire pour positionner le cadran.
+        L'angle alpha choisi est la valeur entre o et 60 degrés qui maximise la distance entre les points et la limite de cadran la plus proche
+    \end{block}
+\end{frame}
+
+\begin{frame}{Illustration de l'optimisation du positionnement du cadran}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.5\paperheight]{images/quadrants_sans_décalage.png}
+                \caption{\label{fig:quad_sans_decalage} Quadrants non optimisés}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.5\paperheight]{images/quadrants_avec_décalage.png}
+                \caption{\label{fig:quad_avec_decalage} Quadrants optimisés}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
