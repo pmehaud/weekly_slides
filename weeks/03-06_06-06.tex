@@ -34,7 +34,7 @@
     \end{block}
     
     \begin{block}{Métrique}
-        Nous avons décidé de partir de la projection de Lambert 93 pour calculer cette distance.
+        Nous avons décidé de partir de la projection de Lambert 93 (qui est déjà présente dans nos données) pour calculer cette distance.
         L'avantage est le gain de temps (environ 30 fois plus rapide), sans perte de performance, par rapport à la conversion en $\unit{km}$ depuis les coordonnées Longitude, Latitude.
     \end{block}
 
@@ -59,11 +59,11 @@
             \begin{block}{Distance}
                 Voici les différents paliers que nous appliquons :
                 \begin{itemize}
-                    \item $d\in\left]0, 1\right]$ : $\text{distance\_max}=2$;
-                    \item $d\in\left]1, 2\right]$ : $\text{distance\_max}=5$;
-                    \item $d\in\left]2, 5\right]$ : $\text{distance\_max}=10$;
-                    \item $d\in\left]5, 10\right]$ : $\text{distance\_max}=15$;
-                    \item $d\in\left]10, \infty\right[$ : $\text{distance\_max}=15$.
+                    \item $d\in\left]0, 1\right]$ : $\text{distance\_max}=\unit[2]{km}$;
+                    \item $d\in\left]1, 2\right]$ : $\text{distance\_max}=\unit[5]{km}$;
+                    \item $d\in\left]2, 5\right]$ : $\text{distance\_max}=\unit[10]{km}$;
+                    \item $d\in\left]5, 10\right]$ : $\text{distance\_max}=\unit[15]{km}$;
+                    \item $d\in\left]10, \infty\right[$ : $\text{distance\_max}=\unit[15]{km}$.
                 \end{itemize}
             \end{block}
         \end{column}
