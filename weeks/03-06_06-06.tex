@@ -3,12 +3,78 @@
 \section{Semaine du 03/06/24 au 06/06/24}
 \insertsectionframe
 
+\subsection{Comparaison des résultats de 2 détection de villes}
+\insertsubsectionframe
+
+\begin{frame}{Affichage}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Affichage des différences}
+                Afin de visualiser les différences, nous pouvons tracer les 2 classifications en même temps sur une carte en adoptant ce code couleur :
+                \begin{itemize}
+                    \item Rouge : station en ville dans les 2 classification;
+                    \item Bleu : station en ville dans exactement 1 classification;
+                    \item Vert : station en campagne dans les 2 classifications.
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \includegraphics[height=0.5\paperheight]{images/city_comparison.png}
+                \caption{\label{fig:city-comparison}Comparaison des résultats de détection de villes : DBScan vs HDBScan}
+            \end{figure}
+        \end{column}
+    \end{columns}
+    
+    
+\end{frame}
+
+
+\begin{frame}{Indicateurs}
+    \begin{block}{Indicateurs de base}
+        Nous avons dévéloppé 4 indicateurs de base afin de caractériser la similarité entre 2 classifications :
+        \begin{itemize}
+            \item a : Le pourcentage de station en ville dans les 2 classification;
+            \item b : Le pourcentage de station en ville dans la première classifiacation et non la deuxième;
+            \item c : Le pourcentage de station en ville dans la deuxième classifiacation et non la première;
+            \item d : Le pourcentage de station en campagne dans les 2 classifications.
+        \end{itemize}
+    \end{block}
+    \begin{block}{Résultats}
+        Sur les classifications présentées dans la slide précédentes, voici les résultats obtenus : 
+        \begin{itemize}
+            \item a = 0.688;
+            \item b = 0.028;
+            \item c = 0.051;
+            \item d = 0.232.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
 \subsection{Nouvelle manière de détecter les villes}
 \insertsubsectionframe
 
+\begin{frame}{Changement de cap} 
+    \begin{block}{Problèmes rencontrés avec DBScan et HDBScan}
+        \begin{itemize}
+            \item Méthodes complexes donc peu prévisibles;
+            \item Résultats non-satisfaisants quand le méthode est appliquée à seulement une partie de la France.
+            \item DBScan est trop binaire, HDBScan est à densité variable donc ne détecte pas toutes les villes de la même façon (problème avec Paris notamment)
+            \item Les probabilités de HDBScan ne caractérisent pas exactement la probabilité d'être en ville mais plutôt la certitude avec laquelle on peut rattacher un point à son cluster.
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Réflexion sur une méthode plus simple}
+        Nous souhaitions savoir quelle station se trouvait en ville, car on sait qu'en ville, les stations sont plus proches les unes des autres, donc les rayons de couverture plus courts.
+        Cependant, il n'est pas nécessaire de detecter les villes pour cela, nous pouvons simplement regarder la distance moyenne aux $k$ plus proches voisins.
+    \end{block}
+
+\end{frame}
+
 \begin{frame}{Méthodologie}
-    Les résultats précédents en utilisant HDBScan ou même DBScan ne sont pas concluants car ils ne donnent pas de résultats absolus sur l'appartenance d'une station à une ville. Ainsi, nous avons mis en place une nouvelle stratégie.
-    \begin{block}{Changement de cap}
+    \begin{block}{Nouvelle méthode}
         Au lieu d'utiliser une méthode de clustering, nous allons utiliser quelque chose de plus simple.
         On classifie chaque station selon la distance moyenne aux $3$ plus proches voisins. %2 c'est pas assez pour avoir quelquechose de palapable, 4 augmente trop la distance.
         Soit $d$ cette distance, on regroupe les stations de la manière suivante:
