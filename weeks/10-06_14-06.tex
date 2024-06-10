@@ -1,4 +1,49 @@
 \smallframetitle
 
-\section{Semaine du 10/06/24 au 14/06/24}
+\section{From 10/06/24 to 14/06/24}
 \insertsectionframe
+
+\subsection{Modification of criteria}
+\insertsubsectionframe
+
+\begin{frame}{New criteria and city classification}
+    After some reflexions, we have agreed to change the way we classify the city-ness of each base station :
+    \begin{block}{New city-ness classification}
+        \begin{columns}
+            \begin{column}{0.4\paperwidth}
+                \begin{itemize}
+                    \item $d\in\left]0, 1\right]$ : city center;
+                    \item $d\in\left]1, 2\right]$ : urban area;
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.4\paperwidth}
+                \begin{itemize}
+                    \item $d\in\left]2, 4\right]$ : extra-urban area;
+                    \item $d\in\left]4, \infty\right[$ : courntryside.
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{block}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{block}{Angle}
+                \begin{itemize}
+                    \item $d\in\left]0, 1\right]$ : $\text{angle\_min}=40^\circ$;
+                    \item $d\in\left]1, 2\right]$ : $\text{angle\_min}=30^\circ$;
+                    \item $d\in\left]2, 4\right]$ : $\text{angle\_min}=25^\circ$;
+                    \item $d\in\left]4, \infty\right[$ : $\text{angle\_min}=15^\circ$.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.4\paperwidth}
+            \begin{block}{Distance}
+                \begin{itemize}
+                    \item $d\in\left]0, 1\right]$ : $\text{distance\_max}=\unit[2]{km}$;
+                    \item $d\in\left]1, 2\right]$ : $\text{distance\_max}=\unit[5]{km}$;
+                    \item $d\in\left]2, 4\right]$ : $\text{distance\_max}=\unit[10]{km}$;
+                    \item $d\in\left]4, \infty\right[$ : $\text{distance\_max}=\unit[15]{km}$.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
