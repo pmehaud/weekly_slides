@@ -47,3 +47,56 @@
         \end{column}
     \end{columns}
 \end{frame}
+
+
+\subsection{City detection results comparison}
+\insertsubsectionframe
+
+\begin{frame}{Reminder : the brute results}
+    \begin{figure}
+        \includegraphics[height=0.6\paperheight]{images/city-detection.png}
+        \caption{\label{fig:city-detection}City detection by respectively DBScan, HDBScan and 3-NN methods}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Graphical methods comparison}
+    \begin{figure}
+        \includegraphics[height=0.6\paperheight]{images/city-detection-comparison.png}
+        \caption{\label{fig:city-detection-comparison}DBScan vs HDBScan / HDBScan vs 3-NN / DBScan vs 3-NN}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Numerical methods comparison}
+    \begin{columns}
+        \begin{column}{0.22\paperwidth}
+            \begin{block}{DBScan vs HDBScan}
+                \begin{itemize}
+                    \item $a=0.688$
+                    \item $b=0.028$
+                    \item $c=0.052$
+                    \item $d=0.232$
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.22\paperwidth}
+            \begin{block}{HDBScan vs 3-NN}
+                \begin{itemize}
+                    \item $a=0.626$
+                    \item $b=0.114$
+                    \item $c=0.010$
+                    \item $d=0.250$
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.22\paperwidth}
+            \begin{block}{DBScan vs 3-NN}
+                \begin{itemize}
+                    \item $a=0.630$
+                    \item $b=0.086$
+                    \item $c=0.007$
+                    \item $d=0.277$
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
