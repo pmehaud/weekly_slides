@@ -72,7 +72,7 @@
     \end{block}
 \end{frame}
 
-\subsection{Modification of criteria}
+\subsection{Altair AI Studio Software Review}
 \insertsubsectionframe
 
 \begin{frame}{Altair AI Studio Software Review}
@@ -81,7 +81,6 @@
     \begin{block}{Altair AI Studio}
         This is a platform designed for data analysis and machine learning model building. Possible benefits for us:
         \begin{itemize}
-            \item Simplifies data integration and visualization of base station and land cover data.
             \item Supports clustering and classification algorithms.
             \item Support for various machine learning algorithms.
             \item Enables effective result visualization (graphs) for enhanced analysis.
@@ -94,7 +93,6 @@
                     \item Integration with various data sources.
                     \item Interactive model creation and testing.
                     \item Support for various machine learning algorithms.
-                    \item User-friendly interface for data analysis and visualization.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -113,6 +111,45 @@
 \begin{frame}{Example of Usage in Altair AI Studio}
     \begin{figure}
         \includegraphics[height=0.6\paperheight]{images/Altair/Altair_proc_exmpl.png}
-        \caption{How 3-NN method works}
+        \caption{How Altair AI Software works}
     \end{figure}
+\end{frame}
+
+
+\subsection{New Possible Approach for Terrain Classification}
+\insertsubsectionframe
+
+\begin{frame}{More accurate verification of the classification of base station locations}
+We want to validate and enhance the previous classification of base station locations by leveraging a new geographic dataset. 
+We found and will try to use a comprehensive dataset from \url{data.enseignementsup-recherche.gouv.fr}, which includes precise geographic data points across France with pre-defined zone classifications.
+\begin{block}{Methodology for Base Station Classification}
+    Previously, we worked with a dataset containing locations of all base stations. Now, we utilize an additional dataset with geographic points across France, each classified into zones (urban, suburban, rural). By comparing base station coordinates with these geographic points, we determine the zone of each base station. The closest geographic point's classification is assigned to the base station, providing a more accurate terrain classification.
+\end{block}
+    \begin{block}{Benefits:}
+        \begin{itemize}
+            \item Cross-reference base station coordinates with geographic data points to accurately assign zone classifications.
+            \item Provides an additional layer of verification and accuracy for our classification methods.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+
+\begin{frame}{Classification of points in the new dataset}
+    \begin{figure}
+        \includegraphics[height=0.6\paperheight]{images/Geo_approach/New_dataset_points_ill.png}
+        \caption{Classification of points from the new dataset}
+    \end{figure}
+\end{frame}
+\begin{frame}{Classification of points in the new dataset}
+    \begin{block}{Geographic identifiers:}
+        \begin{itemize}
+        \item UU (Urban Units): Areas classified as urban units.
+        \item CR (Rural Communes): Areas classified as rural communes.
+        \item AU (Urban Areas): Larger urban areas or agglomerations.
+        \end{itemize}
+    \end{block}
+    \begin{block}{Methodology and Challenges}
+            This method helps classify base station locations by comparing them with geographic data points. However, we need to preprocess the dataset carefully and address the issue of having a limited number of points. To ensure high accuracy, we might need to augment the data or combine it with other datasets for better coverage and precision
+    \end{block}
 \end{frame}
