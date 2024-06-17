@@ -44,3 +44,30 @@
         \caption{Road detection}
     \end{figure}
 \end{frame}
+
+\subsection{More details and problems}
+\insertsubsectionframe
+
+\begin{frame}{Detailed clusters detected}
+    \begin{figure}
+        \includegraphics[height=0.6\paperheight]{images/clusters_road_detection.html.png}
+        \caption{Detailed clusters detected in coutryside by each method}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Problems and ideas}
+    \begin{block}{Problems}
+        \begin{itemize}
+            \item A lot of little citys detected : not only roads ;
+            \item The areas around big citys are a mess ;
+            \item HDBScan has only one cluster.
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Ideas}
+        \begin{itemize}
+            \item Refine the parameters of each method ;
+            \item Use linear regressions to detect parts of roads and maybe help propagate them.
+        \end{itemize}
+    \end{block}
+\end{frame}
