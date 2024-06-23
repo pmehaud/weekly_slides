@@ -17,6 +17,40 @@
     \end{block}
 \end{frame}
 
+\begin{frame}{New method illustration (1/2)}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.4\paperwidth]{images/road_detection/clust1.png}}
+                \caption{One clustering method}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.4\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.4\paperwidth]{images/road_detection/clust2.png}}
+                \caption{Another clustering method}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{New method illustration (2/2)}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.4\paperwidth]{images/road_detection/merge_clust.png}}
+                \caption{Merge of the clusters}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.4\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.4\paperwidth]{images/road_detection/elimination.png}}
+                \caption{Elimination of noise}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \begin{frame}{DBScan clustering}
     \begin{figure}
         \includegraphics[height=0.6\paperheight]{images/cartes/road_detection/dbs.png}
@@ -151,5 +185,37 @@ We found and will try to use a comprehensive dataset from \url{data.enseignement
     \end{block}
     \begin{block}{Methodology and Challenges}
             This method helps classify base station locations by comparing them with geographic data points. However, we need to preprocess the dataset carefully and address the issue of having a limited number of points. To ensure high accuracy, we might need to augment the data or combine it with other datasets for better coverage and precision
+    \end{block}
+\end{frame}
+
+\subsection{Another new database}
+\insertsubsectionframe
+
+\begin{frame}{New possibilities on city/countryside classification}
+    \begin{columns}
+        \begin{column}{0.4\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.4\paperwidth]{images/cartes/new_databases/new_database.png}}
+                \caption{Database we presented last week}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.4\paperwidth}
+            \begin{figure}
+                \boxed{\includegraphics[width=0.4\paperwidth]{images/cartes/new_databases/new-new_database.png}}
+                \caption{A new database}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{What's this?}
+    We found a new database on the population of each french commune in 2021\footnote{\url{https://www.insee.fr/fr/statistiques/7739582}}.
+    \begin{block}{INSEE?}
+        It is the National Institute of Statistics and Economics Studies. It collects, analyses and disseminates information on the French economy and society.
+    \end{block}
+
+    \begin{block}{Why this one?}
+        Firstly, this database is really recent (updated on 26/01/2024). Then, the other database we introduced was to permisive in the definition of what is a city (a commune with more than $2000$ inhabitants).
+        So we wanted something more flexible.
     \end{block}
 \end{frame}
