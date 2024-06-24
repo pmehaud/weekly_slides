@@ -202,7 +202,7 @@ We found and will try to use a comprehensive dataset from \url{data.enseignement
         \begin{column}{0.4\paperwidth}
             \begin{figure}
                 \boxed{\includegraphics[width=0.4\paperwidth]{images/cartes/new_databases/new-new_database.png}}
-                \caption{A new database}
+                \caption{A new database (cities with more than $5000$ inhabitants)}
             \end{figure}
         \end{column}
     \end{columns}
@@ -232,18 +232,18 @@ We found and will try to use a comprehensive dataset from \url{data.enseignement
 
 \begin{frame}{A bit of math theory (1/2)}
     \begin{block}{Multiple linear regression}
-        Let a dataset be composed of $m$ vectors$\ensuremath{\left(x^{i}\right)_{i\in\left\{ 1...m\right\} }}$
-        of $\mathbb{R}^{n}$, ie $\forall i\in\{1,...,m\}$, $x^{i}=(x_{1}^{i},\dots,x_{n}^{i})$. 
+        Let a dataset be composed of $m$ vectors$\ensuremath{\left(x^{i}\right)_{i\in\left\{ 1\dots m\right\} }}$
+        of $\mathbb{R}^{n}$, ie $\forall i\in\{1,\dots ,m\}$, $x^{i}=(x_{1}^{i},\dots,x_{n}^{i})$. 
 
-        Let $\ensuremath{\left(y^{i}\right)_{i\in\left\{ 1...m\right\} }}$
+        Let $\left(y^{i}\right)_{i\in\left\{ 1\dots m\right\}}$
         be $m$ associated values in $\mathbb{R}$.
 
         Then, we can find a linear function $f:\mathbb{R}^{n}\rightarrow\mathbb{R}$
         (ie $f(x_{1},\dots,x_{n})=c_{1}x_{1}+\dots+c_{n}x_{n}$) that minimises
-        the error : $\begin{Vmatrix}\sum_{i=1}^{m}(f(x^{i})-y^{i})\end{Vmatrix}$
+        the error : $\Vert\sum_{i=1}^{m}(f(x^{i})-y^{i})\Vert$
 
-        $f$ is called a multiple linear regression associated to $\ensuremath{\left(x^{i}\right)_{i\in\left\{ 1...m\right\} }}$
-        and $\ensuremath{\left(y^{i}\right)_{i\in\left\{ 1...m\right\} }}$.
+        $f$ is called a multiple linear regression associated to $\left(x^{i}\right)_{i\in\left\{ 1\dots m\right\}}$
+        and $\left(y^{i}\right)_{i\in\left\{ 1\dots m\right\}}$.
     \end{block}
     \begin{figure}
         \boxed{\includegraphics[height=0.3\paperheight]{images/multiple_linear_regression.png}}
@@ -253,11 +253,11 @@ We found and will try to use a comprehensive dataset from \url{data.enseignement
 
 \begin{frame}{A bit of math theory (2/2)}
     \begin{block}{Polynomial regression}
-        Let a dataset be composed of $m$ values $\ensuremath{\left(x^{i}\right)_{i\in\left\{ 1...m\right\} }}$ of $\mathbb{R}$. 
+        Let a dataset be composed of $m$ values $\left(x^{i}\right)_{i\in\left\{ 1\dots m\right\} }$ of $\mathbb{R}$. 
 
-        Let $\ensuremath{\left(y^{i}\right)_{i\in\left\{ 1...m\right\}}}$ be $m$ associated values in $\mathbb{R}$.
+        Let $\ensuremath{\left(y^{i}\right)_{i\in\left\{ 1\dots m\right\}}}$ be $m$ associated values in $\mathbb{R}$.
 
-        We can transform the data in $m$ vectors$\ensuremath{\left(x^{i}\right)_{i\in\left\{ 1...m\right\}}}$
+        We can transform the data in $m$ vectors$\left(x^{i}\right)_{i\in\left\{ 1\dots m\right\}}$
         of $\mathbb{R}^{n+1}$ defined by $(x_{0}^{i},x_{1}^{i},x_{2}^{i},\dots,x_{n}^{i})=(1,x^{i},(x^{i})^{2},\dots,(x^{i})^{n})$, 
         and then apply the multiple linear regression seen earlier on this transormed data.
         
@@ -269,16 +269,16 @@ We found and will try to use a comprehensive dataset from \url{data.enseignement
             \end{cases}
         \]
         
-        That is a degree n polynome that approximates the relation between $x$ and $y$.
+        That is a degree $n$ polynome that approximates the relation between $x$ and $y$.
     \end{block}
 
     \begin{block}{Quantify the quality of the approximation}
-        As for the simple linear regression, we obtain a R coefficient between 0 and 1 that indicates if the approximation is close to the original data 
-        (ie if the polynome we find at the end is close to the real appearance of the data).
+        As for the simple linear regression, we obtain a $R$ coefficient between $0$ and $1$ that indicates if the approximation is close to the original data 
+        (i.e. if the polynome we find at the end is close to the real appearance of the data).
     \end{block}
 \end{frame}
 
-\begin{frame}{Application of the method on each cluster of hdbscan}
+\begin{frame}{Application of the method on each cluster of HDBScan}
     \begin{figure}
         \boxed{\includegraphics[height=0.6\paperheight]{images/hdbscan_roads.png}}
         \caption{Approximation of each cluster by a degree 20 polynome}
@@ -288,6 +288,6 @@ We found and will try to use a comprehensive dataset from \url{data.enseignement
 \begin{frame}{Filtration of the cluster by keeping the ones that have a $R$ coefficient above a value}
     \begin{figure}
         \boxed{\includegraphics[height=0.6\paperheight]{images/hdbscan_roads_filtered.png}}
-        \caption{Approximation of each cluster by a degree 20 polynome, keeping only the ones with a $R$ coefficient above 0.2}
+        \caption{Approximation of each cluster by a degree 20 polynome, keeping only the ones with a $R$ coefficient above $0.2$}
     \end{figure}
 \end{frame}
