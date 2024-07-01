@@ -3,6 +3,56 @@
 \section{From 24/06/24 to 28/06/24}
 \insertsectionframe
 
+\subsection{New ideas on neighbours detection}
+\insertsubsectionframe
+
+\begin{frame}{Neighbours detection without Delaunay}
+    Just to see, we asked ourselves: why not trying to find neighbours without the Delaunay triangulation? Here is our methodology:
+
+    \begin{block}{Creating the potential-neighbours-graph}
+        The base idea was to firstly create a graph. But how?
+
+        We will use the maximum distance to connect base stations according to the distance criteria,
+        i.e. we connect a base station to surrounding stations that are in the radius of $max\_distance$.
+    \end{block}
+
+    And then we apply the angle and quadrant criteria like before.
+    
+    \begin{block}{Is it worth it?}
+        It gives results that are more or less the same than before, but there are some imperfections.
+        So, we could say that this is interesting but not really useful.
+    \end{block}
+\end{frame}
+
+\subsection{Here come\dots}
+\insertsubsectionframe
+
+\begin{frame}{\dots a newer database!}
+    Because the other databases we found earlier were not really convincing (in fact they are just useful to compare results).
+    We therefore did some other research and found some interesting things!
+
+    \begin{block}{ANFR}
+        The National FRequency Agency, a public administrative body, was set up by the Telecommunications Regulation Act of 26 July 1996
+        to plan, manage and monitor the use of public radio frequencies in France.
+    \end{block}
+
+    \begin{block}{The database itself}
+        In this database\footnotemark, you have a map of all base stations in France. The interest of this database is that we can have all the frequencies used in one site and the orientation of the antennas.
+
+        However, the problem is that we cannot download this database.
+    \end{block}
+
+    So, let's find a downloadable database.
+
+    \footnotetext{\url{https://www.cartoradio.fr/\#/cartographie/stations}}
+\end{frame}
+
+\begin{frame}{\dots a newer database! - bis}
+    This is another database from ANFR. This time we have the frequencies used in the databases.
+    
+    We linked those results in the first database by only keeping the highest frequency per base station.
+\end{frame}
+
 \subsection{Analysis of Frequency Data for Mobile Operators in France}
 \insertsubsectionframe
 
