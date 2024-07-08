@@ -224,3 +224,76 @@
 \end{block}
 \end{frame}
 
+\subsection{How to describe departments?}
+\insertsubsectionframe
+
+\begin{frame}{Methodology}
+    We wanted to have an indicator about every departement to find out a more precise approximation of coverage cells' diameters.
+    Here is what we did :
+
+    \begin{block}{Mean distance to neighbours}
+        The basic idea is to compute the sum of distances between every base station in a department, divided by the number of base stations.
+        Let $n$ be the number of base stations in a departement, we will name each base station in $\{0,\dots ,n\}$. Let $d(\,\cdotp,\,\cdotp)$ be the function that calculates the distance bewteen two base stations.
+        
+        So, we obtain this formula (let $\gamma$ be the number we look for):
+        $$
+            \gamma = \frac{\sum_{i=1}^{n} \sum_{j\neq i} d(i,j)}{n}
+        $$
+    \end{block}
+
+    The idea that motivated the implementation of this method is that if a departement is mainly constituated of mountains, the mean distance between base stations is shorter.
+    We will see that this distance as other influential parameters.
+\end{frame}
+
+\begin{frame}{Fine tuning of this new method}
+    We now have to think about the things that can influence our results, to normalize them.
+
+    \begin{block}{Things that influence $\gamma$}
+        We have identified several influencing factors such as:
+        \begin{itemize}
+            \item The amout of population;
+            \item The topography of the departement (is it flat or not?);
+            \item The highways or railways;
+            \item The size of the departement. 
+        \end{itemize}
+
+        However, we will, for now only use the number of inhabitants and the size of the department.
+    \end{block}
+
+    \begin{block}{Normalization of the data}
+        Basically, here is the formula we use :
+        $$
+            \gamma_{\text{norm}} = \frac{\gamma}{\text{number of inhabitants}\times\text{surface area}}
+        $$
+    \end{block}
+\end{frame}
+
+\begin{frame}{Conclusion - results}
+    \begin{table}[!ht]
+        \tiny
+        \centering
+        \begin{tabular}{lllll}
+        \hline
+            \textbf{nom\_dep} & \textbf{city} & \textbf{countryside} & \textbf{total} & \textbf{normalized} \\ \hline
+            \textbf{Gironde} & 5304.87 & 19134.2 & 26241.4 & 19.0708 \\ 
+            \textbf{Rhône} & 5253.74 & 5258.18 & 12435.4 & 22.9532 \\ 
+            \textbf{Bouches-du-Rhône} & 12387.8 & 7876.89 & 22356.1 & 23.0575 \\ 
+            \textbf{Loire-Atlantique} & 6210.51 & 12295.7 & 19599.4 & 23.7876 \\ 
+            \textbf{Isère} & 5022.42 & 16067.9 & 21875 & 25.1173 \\ 
+             & & \dots & & \\
+            \textbf{Meuse} & 700.178 & 10018 & 10831.2 & 90.7332 \\ 
+            \textbf{Hauts-de-Seine} & 2429.9 & -1 & 2429.9 & 91.0103 \\ 
+            \textbf{Hautes-Alpes} & 845.008 & 5664.28 & 6674.97 & 91.1299 \\ 
+            \textbf{Haute-Corse} & 376.022 & 5495.8 & 6415.91 & 92.9077 \\ 
+            \textbf{Haute-Marne} & 1301.65 & 9773.92 & 11333 & 97.837 \\ 
+            \textbf{Corse-du-Sud} & 759.224 & 4241.56 & 5271.69 & 110.742 \\ 
+            \textbf{Lozère} & 54.238 & 5703.01 & 5835.86 & 146.682 \\ 
+            \textbf{Paris} & 3437.78 & -1 & 3437.78 & 151.144 \\ \hline
+        \end{tabular}
+        \caption{Results}
+    \end{table}
+
+    \begin{block}{Conclusion}
+        We cannot use this results to quantify the topography of each department, but we could still find some use to approximate the coverage cells' size.
+    \end{block}
+\end{frame}
