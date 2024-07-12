@@ -65,3 +65,56 @@
         \caption{Nodes detected as roads after the method}
     \end{figure}
 \end{frame}
+
+
+\subsection{Further advancement on Coverage Calculation}
+\insertsubsectionframe
+    
+\begin{frame}{Creation of New Database}
+    \begin{itemize}
+        \item We have created a new database containing detailed information about base stations and their antennas in Normandy, France.
+    \end{itemize}
+    \begin{block}{Database Fields}
+        \begin{itemize}
+            \item Station ID (\texttt{id\_station\_anfr})
+            \item Latitude and Longitude
+            \item Department and Commune Names
+            \item Presence of 2G, 3G, 4G, and 5G technologies
+            \item Antenna Dimensions and Azimuths
+        \end{itemize}
+    \end{block}
+\end{frame}
+    
+\begin{frame}{Program for Visualization}
+    \begin{itemize}
+        \item We implemented a Python program to visualize the base stations on a map and analyze their coverage using Voronoi diagrams.
+    \end{itemize}
+    \begin{block}{Key Steps in the Program}
+        \begin{itemize}
+            \item Load and clean the data.
+            \item Add markers and pop-ups for each base station.
+            \item Calculate and visualize Voronoi cells and antenna sectors.
+        \end{itemize}
+    \end{block}    
+    \begin{block}{Visualization Results}
+        \begin{itemize}
+            \item The map is centered on Normandy and shows base stations as markers.
+            \item Each marker provides detailed information about the station and its antennas.
+            \item Voronoi tessellation is used to visualize the coverage area of each base station.
+            \item Antenna azimuths are displayed to indicate coverage directions.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example Visualization}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{images/Altair/antenn-vizualization.png}
+    \end{center}
+    \begin{itemize}
+        \item The green lines represent Voronoi boundaries.
+        \item The markers indicate base station locations with detailed popup information.
+        \item Direction lines show the azimuths of the antennas.
+    \end{itemize}
+\end{frame}
+
